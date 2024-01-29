@@ -27,7 +27,7 @@ public class RedisServer {
         this.ip = ip;
         this.port = port;
         this.persistenceFilePath = filePath;
-        this.commandProcessor = new CommandProcessor(filePath);
+        this.commandProcessor = new CommandProcessor();
         this.commandProcessorLock = new Object();
         this.executorService = Executors.newCachedThreadPool();
     }
@@ -66,7 +66,7 @@ public class RedisServer {
 
                 String response = null;
                 synchronized (commandProcessorLock) {
-                    response = commandProcessor.processCommand(request);
+                    //response = commandProcessor.processCommand(request);
                 }
 
                 byte[] responseBytes = response.getBytes(StandardCharsets.UTF_8);
