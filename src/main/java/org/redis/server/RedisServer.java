@@ -1,6 +1,7 @@
 package org.redis.server;
 
 import org.redis.processor.CommandProcessor;
+import org.redis.storage.Memory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,9 +11,12 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 
 public class RedisServer {
@@ -20,71 +24,63 @@ public class RedisServer {
     private final int port;
     private final String persistenceFilePath;
     private final CommandProcessor commandProcessor;
-    private final Object commandProcessorLock;
     private final ExecutorService executorService;
+    private ServerSocket serverSocket;
+    private boolean openConnection = true;
+    private List<Socket> activeConnectedSockets = new ArrayList<>();
+    private Memory memory;
 
     public RedisServer(String ip, int port, String filePath) {
         this.ip = ip;
         this.port = port;
         this.persistenceFilePath = filePath;
         this.commandProcessor = new CommandProcessor();
-        this.commandProcessorLock = new Object();
-        this.executorService = Executors.newCachedThreadPool();
+        //register a thread for this name
+        this.memory = new Memory(); //Allocating new memory for each connection
+        ThreadFactory threadFactory =Thread.ofVirtual().name("client-handler" , 1).factory();
+        this.executorService = Executors.newThreadPerTaskExecutor(threadFactory);
     }
 
-    public void start() {
-        try (ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName(ip))) {
-            System.out.println("Redis Lite server listening on port " + port);
-
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                clientSocket.setTcpNoDelay(true);
-                System.out.println("Client connected.");
-
-                CompletableFuture.runAsync(() -> handleClient(clientSocket), executorService);
+    public void start() throws  IOException{
+        this.serverSocket = new ServerSocket(this.port);
+        try{
+            while(openConnection){
+                Socket clientSocket = this.serverSocket.accept();
+                this.activeConnectedSockets.add(clientSocket);
+                executorService.submit(()->
+                {
+                    try {
+                            new RedisConnectionManager(clientSocket , this.memory).connect();
+                    }catch (IOException e){}
+                });
             }
-        } catch (IOException e) {
-            System.err.println("Error starting server: " + e.getMessage());
+
+        }catch (IOException e){
+
         }
     }
 
+    private void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 
-    private void handleClient(Socket clientSocket) {
-        try (Socket socket = clientSocket;
-             InputStream inputStream = socket.getInputStream();
-             OutputStream outputStream = socket.getOutputStream()) {
+            try {
 
-            byte[] buffer = new byte[1024];
-
-            while (true) {
-                int bytesRead = inputStream.read(buffer);
-                if (bytesRead == -1) {
-                    break;
+                for(Socket connectedClient: this.activeConnectedSockets) {
+                    connectedClient.close();
                 }
 
-                String request = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
-
-                String response = null;
-                synchronized (commandProcessorLock) {
-                    //response = commandProcessor.processCommand(request);
-                }
-
-                byte[] responseBytes = response.getBytes(StandardCharsets.UTF_8);
-                System.out.println(response);
-                outputStream.write(responseBytes);
-                outputStream.flush();
+                this.executorService.shutdown();
+                this.stop();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            System.err.println("Error handling client: " + e.getMessage());
-        } finally {
-            System.out.println("Client disconnected.");
-        }
+        }));
     }
 
-    public void loadDatabaseState() {
-        if (Files.exists(Paths.get(persistenceFilePath))) {
-            //commandProcessor.processLoadCommand(persistenceFilePath);
-        }
+    public void stop() throws IOException {
+        openConnection = false;
+        serverSocket.close();
+
     }
 
 }
