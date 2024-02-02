@@ -25,7 +25,12 @@ public class Constants {
     public static final String EXISTS = "EXISTS";
     public static final String INCR = "INCR";
     public static final String DECR = "DECR";
+    public static final String EXIT = "EXIT";
 
 
+    //Exception Messages
+    public static final String INVALID_COMMAND_ERROR = "Command should be an array of bulk str";
+    public static final String UNKNOWN_COMMAND_ERROR = "Command should be an array of bulk str";
 
+    public static final String CLOSE_CONNECTION = "Disconnecting Client";
 }

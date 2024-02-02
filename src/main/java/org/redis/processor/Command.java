@@ -1,4 +1,4 @@
-package org.redis;
+package org.redis.processor;
 import org.redis.processor.error.*;
 import org.redis.storage.Memory;
 

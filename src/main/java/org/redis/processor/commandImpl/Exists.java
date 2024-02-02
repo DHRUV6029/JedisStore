@@ -1,6 +1,6 @@
 package org.redis.processor.commandImpl;
 
-import org.redis.Command;
+import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
 import org.redis.storage.Memory;
 
