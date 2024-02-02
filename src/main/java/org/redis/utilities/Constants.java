@@ -31,6 +31,5 @@ public class Constants {
     //Exception Messages
     public static final String INVALID_COMMAND_ERROR = "Command should be an array of bulk str";
     public static final String UNKNOWN_COMMAND_ERROR = "Command should be an array of bulk str";
-
     public static final String CLOSE_CONNECTION = "Disconnecting Client";
 }
