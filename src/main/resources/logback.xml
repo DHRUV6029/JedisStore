@@ -9,4 +9,3 @@
         <appender-ref ref="CLOUDWATCH" />
     </root>
 </configuration>
-</configuration>
