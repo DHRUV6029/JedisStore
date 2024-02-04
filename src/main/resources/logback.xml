@@ -1,5 +1,5 @@
 <configuration>
-    <appender name="CLOUDWATCH" class="com.your.package.CloudWatchAppender">
+    <appender name="CLOUDWATCH" class="org.redis.logging.CloudWatchAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>

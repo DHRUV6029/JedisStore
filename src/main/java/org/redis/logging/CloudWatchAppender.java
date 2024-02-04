@@ -4,10 +4,8 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsClient;
-import software.amazon.awssdk.services.cloudwatchlogs.model.DescribeLogStreamsRequest;
-import software.amazon.awssdk.services.cloudwatchlogs.model.DescribeLogStreamsResponse;
-import software.amazon.awssdk.services.cloudwatchlogs.model.InputLogEvent;
-import software.amazon.awssdk.services.cloudwatchlogs.model.PutLogEventsRequest;
+import software.amazon.awssdk.services.cloudwatchlogs.model.*;
+
 import java.util.LinkedList;
 import java.util.Queue;
 public class CloudWatchAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
@@ -18,8 +16,8 @@ public class CloudWatchAppender extends UnsynchronizedAppenderBase<ILoggingEvent
     private Queue<InputLogEvent> eventQueue;
 
     public CloudWatchAppender() {
-        logGroupName = "Redis-Server-Java-App-Logs";
-        logStreamName = "redis-server-app-logstream";
+        logGroupName = "redis-server-logs";
+        logStreamName = "redis-server-application-logs-stream";
 
         client = CloudWatchLogsClient.builder()
                 .region(Region.of("us-east-1"))
@@ -28,7 +26,7 @@ public class CloudWatchAppender extends UnsynchronizedAppenderBase<ILoggingEvent
     }
 
     @Override
-    protected void append(ILoggingEvent event) {
+    public void append(ILoggingEvent event) {
         // Construct the log message
         InputLogEvent logEvent = InputLogEvent.builder()
                 .message(event.getLevel().levelStr + " " + event.getFormattedMessage())
@@ -45,6 +43,7 @@ public class CloudWatchAppender extends UnsynchronizedAppenderBase<ILoggingEvent
         }
         */
         // Flush queue - Dev
+
         flushEvents();
     }
 
@@ -92,3 +91,6 @@ public class CloudWatchAppender extends UnsynchronizedAppenderBase<ILoggingEvent
 
 
 }
+
+
+

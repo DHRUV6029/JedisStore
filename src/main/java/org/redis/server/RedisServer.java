@@ -1,8 +1,12 @@
 package org.redis.server;
 
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.LoggingEvent;
+import org.redis.Main;
 import org.redis.processor.CommandProcessor;
 import org.redis.storage.KeyValueStore;
 import org.redis.storage.Memory;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,8 +17,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import org.redis.logging.CloudWatchAppender;
 
 public class RedisServer {
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(RedisServer.class);
     private final String ip;
     private final int port;
     private final ExecutorService executorService;
@@ -33,6 +39,8 @@ public class RedisServer {
     }
 
     public void start() throws  IOException{
+
+        logger.info("This is Test");
         registerShutdownHook();
         this.serverSocket = new ServerSocket(this.port);
         try{

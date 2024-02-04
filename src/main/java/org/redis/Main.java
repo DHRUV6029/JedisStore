@@ -1,6 +1,9 @@
 package org.redis;
+import ch.qos.logback.classic.Logger;
 import org.redis.utilities.Constants;
 import org.redis.server.RedisServer;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
