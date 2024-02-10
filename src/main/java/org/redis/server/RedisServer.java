@@ -17,8 +17,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import org.redis.logging.CloudWatchAppender;
-
 public class RedisServer {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(RedisServer.class);
     private final String ip;
