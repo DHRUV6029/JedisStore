@@ -7,7 +7,7 @@ import org.redis.storage.Memory;
 
 public class Decrement extends Command {
     @Override
-    public void ValidationError() throws ValidationError {
+    public void validation() throws ValidationError {
         if (!"DECR".equalsIgnoreCase(super.getCommand())) throw new ValidationError("Not correct use of 'decr' command!");
         if (super.getCommandArgs().length != 1) throw new ValidationError("Need to pass exactly one key");
     }

@@ -6,7 +6,7 @@ import org.redis.storage.Memory;
 
 public class Exists extends Command {
     @Override
-    public void ValidationError() throws ValidationError {
+    public void validation() throws ValidationError {
         if (!"EXISTS".equalsIgnoreCase(super.getCommand())) throw new ValidationError("Not correct use of 'exists' command!");
         if (super.getCommandArgs().length == 0) throw new ValidationError("Need to pass key(s)");
     }

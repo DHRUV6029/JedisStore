@@ -6,7 +6,7 @@ import org.redis.storage.Memory;
 
 public class Delete extends Command {
     @Override
-    public void ValidationError() throws ValidationError {
+    public void validation() throws ValidationError {
         if (!"DEL".equalsIgnoreCase(super.getCommand())) throw new ValidationError("Not correct use of 'del' command!");
         if (super.getCommandArgs().length == 0) throw new ValidationError("Need to pass key(s to delete)");
     }

@@ -8,7 +8,7 @@ import org.redis.storage.Memory;
 public class Increment extends Command {
 
     @Override
-    public void ValidationError() throws ValidationError{
+    public void validation() throws ValidationError{
         if (!"INCR".equalsIgnoreCase(super.getCommand())) throw new ValidationError("Not correct use of 'incr' command!");
         if (super.getCommandArgs().length != 1) throw new ValidationError("Need to pass exactly one key");
     }

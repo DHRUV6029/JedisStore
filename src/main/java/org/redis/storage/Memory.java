@@ -1,5 +1,9 @@
 package org.redis.storage;
 
+import org.redis.storage.model.ExpiryData;
+
+import java.util.Map;
+
 public class Memory {
     private KeyValueStore keyValueStore;
     public Memory(){}
@@ -25,4 +29,6 @@ public class Memory {
     public void set(String key, Object value) {
         keyValueStore.getKeyValueStore().put(key , value);
     }
+
+
 }

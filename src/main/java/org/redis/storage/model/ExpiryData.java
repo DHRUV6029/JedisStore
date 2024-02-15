@@ -4,9 +4,9 @@ public class ExpiryData {
     long setAt;
     long expireAt;
 
-    ExpiryData(){}
+    public ExpiryData(){}
 
-    ExpiryData(long setAt , long expireAt){
+    public ExpiryData(long setAt, long expireAt){
         this.setAt = setAt;
         this.expireAt = expireAt;
     }

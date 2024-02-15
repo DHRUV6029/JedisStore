@@ -7,7 +7,7 @@ import org.redis.storage.Memory;
 
 public class Ping extends Command {
     @Override
-    public void ValidationError() {
+    public void validation() {
         if (!"PING".equalsIgnoreCase(super.getCommand())) throw new ValidationError("Not correct use of 'ping' command!");
     }
 

@@ -7,7 +7,7 @@ public abstract class Command {
     private String command;
     private String[] commandArgs;
     public Command(){}
-    public abstract void ValidationError() throws ValidationError;
+    public abstract void validation() throws ValidationError;
     public abstract Object executeCommand(Memory memoryRef);
 
     public void process(Memory memory) throws ValidationError{
