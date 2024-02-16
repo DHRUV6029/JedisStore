@@ -27,6 +27,11 @@ public class Memory {
         return false;
     }
 
+    public void removeAll(){
+        keyValueStore.getKeyValueStore().clear();
+
+    }
+
     public void set(String key, Object value) {
         keyValueStore.getKeyValueStore().put(key , value);
     }

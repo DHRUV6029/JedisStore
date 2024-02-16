@@ -4,9 +4,6 @@ import org.redis.processor.Command;
 import org.redis.processor.error.RedisServerError;
 import org.redis.processor.error.ValidationError;
 import org.redis.storage.Memory;
-import org.redis.storage.model.ExpiryData;
-
-import java.util.Date;
 import java.util.function.Predicate;
 
 public class Set extends Command {
