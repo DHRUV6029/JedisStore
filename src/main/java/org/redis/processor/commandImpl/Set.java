@@ -86,7 +86,7 @@ public class Set extends Command {
             case "XX", "xx" -> {
                 if (memoryRef.exists(key)) {
                     memoryRef.set(key, val);
-                    memoryRef.set(key , new ExpiryData(new Date().getTime() , timeout));
+                    memoryRef.setExpiryData(key , timeout);
                 } else {
                     return null;
                 }
@@ -94,14 +94,14 @@ public class Set extends Command {
             case "NX", "nx" -> {
                 if (!memoryRef.exists(key)){
                     memoryRef.set(key, val);
-                    memoryRef.set(key , new ExpiryData(new Date().getTime() , timeout));
+                    memoryRef.setExpiryData(key , timeout);
                 } else {
                     return null;
                 }
             }
             default -> {
                 memoryRef.set(key, val);
-                memoryRef.set(key , new ExpiryData(new Date().getTime() , timeout));
+                memoryRef.setExpiryData(key , timeout);
             }
         }
         return "OK";

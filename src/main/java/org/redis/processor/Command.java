@@ -10,9 +10,9 @@ public abstract class Command {
     public abstract void validation() throws ValidationError;
     public abstract Object executeCommand(Memory memoryRef);
 
-    public void process(Memory memory) throws ValidationError{
-        this.ValidationError();
-        this.executeCommand(memory);
+    public final Object process(Memory memory) throws ValidationError{
+        this.validation();
+        return  this.executeCommand(memory);
     }
 
     public String getCommand(){

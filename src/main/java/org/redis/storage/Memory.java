@@ -2,6 +2,7 @@ package org.redis.storage;
 
 import org.redis.storage.model.ExpiryData;
 
+import java.util.Date;
 import java.util.Map;
 
 public class Memory {
@@ -28,6 +29,15 @@ public class Memory {
 
     public void set(String key, Object value) {
         keyValueStore.getKeyValueStore().put(key , value);
+    }
+
+    public Map<String, ExpiryData> getKeyExpiryData(){
+        return keyValueStore.getKeyExpiry();
+    }
+
+    public void setExpiryData(String key , long timeout){
+        keyValueStore.getKeyExpiry().put(key , new ExpiryData(new Date().getTime() , timeout));
+
     }
 
 
