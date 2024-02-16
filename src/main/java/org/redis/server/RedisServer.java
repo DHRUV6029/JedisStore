@@ -1,9 +1,6 @@
 package org.redis.server;
 
 import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.spi.LoggingEvent;
-import org.redis.Main;
-import org.redis.processor.CommandProcessor;
 import org.redis.storage.KeyValueStore;
 import org.redis.storage.Memory;
 import org.slf4j.LoggerFactory;
