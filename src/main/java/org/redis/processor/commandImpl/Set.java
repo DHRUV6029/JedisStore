@@ -4,6 +4,8 @@ import org.redis.processor.Command;
 import org.redis.processor.error.RedisServerError;
 import org.redis.processor.error.ValidationError;
 import org.redis.storage.Memory;
+import org.redis.utilities.Helper;
+
 import java.util.function.Predicate;
 
 public class Set extends Command {
@@ -11,22 +13,8 @@ public class Set extends Command {
     private String optNxXx = "NONE";
     private String optExPx = "NONE";
     private long optTimeVal = REALLY_BIG_TIME_VAL;
-    private final Predicate<String> isNxXx = (opt) -> "NX".equalsIgnoreCase(opt) || "XX".equalsIgnoreCase(opt);
-    private final Predicate<String> isExPx = (opt) -> {
-        if ("EX".equalsIgnoreCase(opt) || "PX".equalsIgnoreCase(opt)) return true;
-        if ("EXAT".equalsIgnoreCase(opt) || "PXAT".equalsIgnoreCase(opt))
-            throw new RedisServerError("EXAT & PXAT are not supported yet");
-        else return false;
-    };
 
-    private final Predicate<String> IsNumber = (numStr) -> {
-        try {
-            Integer.parseInt(numStr);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    };
+
 
     @Override
     public  void validation() throws ValidationError {
@@ -40,11 +28,11 @@ public class Set extends Command {
         // 1 is val
         // hence starting from 2
         for (int i = 2; i < super.getCommandArgs().length; i++) {
-            if (isNxXx.test(super.getCommandArgs()[i]) || isExPx.test(super.getCommandArgs()[i])) {
-                if (isNxXx.test(super.getCommandArgs()[i])) {
+            if (Helper.isNxXx.test(super.getCommandArgs()[i]) || Helper.isExPx.test(super.getCommandArgs()[i])) {
+                if (Helper.isNxXx.test(super.getCommandArgs()[i])) {
                     this.optNxXx = super.getCommandArgs()[i];
                 }
-                if (isExPx.test(super.getCommandArgs()[i])) {
+                if (Helper.isExPx.test(super.getCommandArgs()[i])) {
                     this.optExPx = super.getCommandArgs()[i];
 
                     try {
@@ -58,8 +46,8 @@ public class Set extends Command {
                         throw new ValidationError("Time value is not a number");
                     }
                 }
-            } else if (IsNumber.test(super.getCommandArgs()[i])) {
-                if (!isExPx.test(super.getCommandArgs()[i - 1])) { // because a number can only be preceded by ex, px
+            } else if (Helper.IsNumber.test(super.getCommandArgs()[i])) {
+                if (!Helper.isExPx.test(super.getCommandArgs()[i - 1])) { // because a number can only be preceded by ex, px
                     throw new ValidationError("Misplaced number value");
                 }
             } else {

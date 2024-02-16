@@ -6,6 +6,9 @@ import org.redis.seriliazers.RespDeserializer;
 import org.redis.seriliazers.RespSerializer;
 import org.redis.storage.Memory;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.redis.utilities.Constants.*;
 
 public class CommandProcessor {
@@ -29,24 +32,51 @@ public class CommandProcessor {
                 return switch (deserializedArray[0].toString().toUpperCase()){
                     case EXIT -> throw new SocketException(CLOSE_CONNECTION);
 
+                    case PING -> serializer.serialize(String.valueOf(new Ping().builder(deserializedArray).
+                            process(null)), false);
+
+                    case ECHO -> serializer.serialize(String.valueOf(new Echo().builder(deserializedArray).
+                            process(null)), true);
+
                     case EXISTS ->  serializer.serialize((int) new Exists().builder(deserializedArray).
                             process(memoryRef));
 
                     case INCR -> serializer.serialize((int) new Increment().builder(deserializedArray).
                             process(memoryRef));
 
-                    case DECR -> serializer.serialize((int) new Decrement().builder(deserializedArray).process(memoryRef));
+                    case DECR -> serializer.serialize((int) new Decrement().builder(deserializedArray).
+                            process(memoryRef));
 
                     case SET -> {
                         Object resp = new Set().builder(deserializedArray).process(memoryRef);
                         if (resp == null) yield serializer.serialize(null, true);
                         else yield serializer.serialize(String.valueOf(resp), false);
                     }
+
                     case GET -> {
                         Object resp = new Get().builder(deserializedArray).process(memoryRef);
                         if (resp == null) yield serializer.serialize(null, true);
                         if (resp instanceof Integer) yield serializer.serialize((int) resp);
                         else yield serializer.serialize(String.valueOf(resp), true);
+                    }
+
+                    case LPUSH -> serializer.serialize((int) new LPush().builder(deserializedArray).
+                            process(memoryRef));
+
+                    case RPUSH -> serializer.serialize((int) new RPush().builder(deserializedArray).
+                            process(memoryRef));
+
+                    case FLUSHALL  -> serializer.serialize(String.valueOf(new FlushAll().builder(deserializedArray).
+                            process(memoryRef)), false);
+
+                    case LRANGE -> {
+                        Object obj = new LRange().builder(deserializedArray).process(memoryRef);
+                        List<String> list = ((ArrayList<?>) obj).stream().map(String::valueOf).toList();
+                        String[] arr = new String[list.size()];
+                        for(int i = 0; i < arr.length; i ++) {
+                            arr[i] = list.get(i);
+                        }
+                        yield serializer.serialize(arr);
                     }
 
                     default ->
