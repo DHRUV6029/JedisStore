@@ -1,10 +1,15 @@
 package org.redis.server;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redis.storage.KeyValueStore;
 import org.redis.storage.Memory;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -28,6 +33,8 @@ public class RedisServer {
         this.ip = ip;
         this.port = port;
         //register a thread for this name
+        this.restoreDb();
+       
         this.memory = new Memory(new KeyValueStore()); //Allocating new memory for each connection
         ThreadFactory threadFactory =Thread.ofVirtual().name("client-handler" , 1).factory();
         this.executorService = Executors.newThreadPerTaskExecutor(threadFactory);
@@ -76,6 +83,30 @@ public class RedisServer {
         openConnection = false;
         serverSocket.close();
 
+    }
+
+    private void restoreDb() {
+        StringBuilder builder = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader("redisLiteDb.rdb"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+
+            String[] data = builder.toString().split("__SEPARATOR__");
+            ObjectMapper mapper = new ObjectMapper();
+            this.memory = mapper.readValue(data[0], new TypeReference<>() {});
+            this.memory.setKeyExpiryStore(mapper.readValue(data[1], new TypeReference<>() {}));
+            if (!this.memory.isKeyValueStoreEmpty()| !this.memory.isKeyValueExpiryStoreEmpty()) {
+                logger.info("Data restored");
+            } else {
+                logger.info("rdb file found, but nothing to restore");
+            }
+        } catch (FileNotFoundException e) {
+            logger.info("Nothing to restore");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
