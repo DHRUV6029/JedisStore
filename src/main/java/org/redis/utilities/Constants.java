@@ -30,6 +30,7 @@ public class Constants {
     public static final String LRANGE = "LRANGE";
     public static final String FLUSHALL = "FLUSHALL";
     public static final String EXIT = "EXIT";
+    public static final String SAVE = "SAVE";
 
 
     //Exception Messages

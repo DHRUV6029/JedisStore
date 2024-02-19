@@ -79,6 +79,8 @@ public class CommandProcessor {
                         yield serializer.serialize(arr);
                     }
 
+                    case SAVE -> serializer.serialize(String.valueOf(new Save().builder(deserializedArray).process(memoryRef)), false);
+
                     default ->
                             throw new CommandNotFound(UNKNOWN_COMMAND_ERROR);
                 };

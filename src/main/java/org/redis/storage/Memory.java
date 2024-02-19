@@ -32,6 +32,10 @@ public class Memory {
 
     }
 
+    public Map<String , Object> getKeyValueStore() {
+        return keyValueStore.getKeyValueStore();
+    }
+
     public boolean isKeyValueStoreEmpty(){
         return keyValueStore.getKeyValueStore().isEmpty();
     }
@@ -49,8 +53,12 @@ public class Memory {
 
     }
 
-    public void setKeyExpiryStore(Map<String, ExpiryData> expiryDetails){
+    public void initKeyExpiryStore(Map<String, ExpiryData> expiryDetails){
         keyValueStore.setKeyExpiry(expiryDetails);
+    }
+    public void initKeyValueyStore(Map<String, Object> keyValues){
+        keyValueStore.setKeyValueStore(keyValues);
+
     }
     public boolean isKeyValueExpiryStoreEmpty(){
         return keyValueStore.getKeyExpiry().isEmpty();

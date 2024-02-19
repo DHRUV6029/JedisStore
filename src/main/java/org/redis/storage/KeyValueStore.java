@@ -18,7 +18,7 @@ public class KeyValueStore {
         this.keyExpiry = keyExpiry;
     }
 
-    protected Map<String , Object> getKeyValueStore(){
+    public Map<String , Object> getKeyValueStore(){
         return keyData;
     }
 
