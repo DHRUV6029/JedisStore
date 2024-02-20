@@ -1,15 +1,21 @@
 package org.redis.server;
+import ch.qos.logback.classic.Logger;
 import org.redis.processor.CommandProcessor;
 import org.redis.seriliazers.RespDeserializer;
 import org.redis.seriliazers.RespSerializer;
 import org.redis.storage.Memory;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 
+
+
 public class RedisServerConnectionManager {
 
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(RedisServerConnectionManager.class);
     private Memory memory;
     private Socket socket;
 
@@ -41,7 +47,7 @@ public class RedisServerConnectionManager {
                 writer.flush();
             }
         } catch (SocketException e) {
-
+            logger.info("Server Disconnected!");
             socket.close();
         } catch (IOException e) {
 
