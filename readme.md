@@ -19,23 +19,29 @@ Which are used in serializer and deserializer.
 
 ## Set and Get Functions
 1. RedisServer (StandAlone)
+   
 ![Alt text](<benchmarks/Screenshot (7).png>)
 
 2. RedisServer (Java Implementation)
+   
 ![Alt text](<benchmarks/Screenshot (7).png>)
 
 ## Set and LPush Functions
 1. RedisServer (StandAlone)
+   
 ![Alt text](<benchmarks/Screenshot (11).png>)
 
 2. RedisServer (Java Implementation)
+3. 
 ![Alt text](<benchmarks/Screenshot (12).png>)
 
 ## Latency 
 1. RedisServer (StandAlone)
+   
 ![Alt text](<benchmarks/Screenshot (10).png>)
 
 2. RedisServer (Java Implementation)
+   
 ![Alt text](<benchmarks/Screenshot (9).png>)
 
 
