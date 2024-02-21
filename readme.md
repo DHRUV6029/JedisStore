@@ -24,7 +24,7 @@ Which are used in serializer and deserializer.
 
 2. RedisServer (Java Implementation)
    
-![Alt text](<benchmarks/Screenshot (7).png>)
+![Alt text](<benchmarks/Screenshot (8).png>)
 
 ## Set and LPush Functions
 1. RedisServer (StandAlone)
