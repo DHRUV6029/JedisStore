@@ -13,6 +13,6 @@ public class Main {
         System.out.println("Server Running");
         var redisServer = new RedisServer( Constants.serverIP, Constants.port , Constants.filePath);
         redisServer.start();
-        System.out.println("Server Running");
+        System.out.println("Server Stopped");
         }
     }
