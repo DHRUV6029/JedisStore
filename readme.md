@@ -7,19 +7,38 @@ This is "Redis"-like server, with support for RESP v2 protocol for serialization
 1. Run `git clone <URL>` 
 2. Open powershell (or terminal), `cd` into the projects base directory, if you are not already there.
 3. Run `mvn clean package`, does as above, but also runs the tests.
-4. To run the jar, execute `java --enable-preview -jar .\target\RedisServer-1.0-SNAPSHOT.jar` from the projects base directory.
+4. To run the jar, execute `java --enable-preview -jar .\target\RedisServer-1.0-SNAPSHOT.jar` from the projects base directory
 
 #Note
 You will need Java version 21 with --enable-preview flag to use String Template
-Which are used as serializer.
+Which are used in serializer and deserializer.
+
+##Note 
+If you want to configure Aws cloud Logging then use start scripts in /scripts folder.
 
 #Performance BenchMark
 
-1. Latency
+## Set and Get Functions
+1. RedisServer (StandAlone)
+![Alt text](<benchmarks/Screenshot (7).png>)
 
-Redis-server - avg  0.34
+2. RedisServer (Java Implementation)
+![Alt text](<benchmarks/Screenshot (7).png>)
 
-Redis (Java-based)  - avg 0.28
+## Set and LPush Functions
+1. RedisServer (StandAlone)
+![Alt text](<benchmarks/Screenshot (11).png>)
+
+2. RedisServer (Java Implementation)
+![Alt text](<benchmarks/Screenshot (12).png>)
+
+## Latency 
+1. RedisServer (StandAlone)
+![Alt text](<benchmarks/Screenshot (10).png>)
+
+2. RedisServer (Java Implementation)
+![Alt text](<benchmarks/Screenshot (9).png>)
+
 
 
 
