@@ -8,6 +8,9 @@ This is "Redis"-like server, with support for RESP v2 protocol for serialization
 2. Open powershell (or terminal), `cd` into the projects base directory, if you are not already there.
 3. Run `mvn clean package`, does as above, but also runs the tests.
 4. To run the jar, execute `java --enable-preview -jar .\target\RedisServer-1.0-SNAPSHOT.jar` from the projects base directory
+##OR
+1. You can also use Docker image by executing `docker build -t <my-application> .`
+2. Then Run `docker run -p 8080:8080 <my-application>`.
 
 ## Note
 1. You will need Java version 21 with --enable-preview flag to use String Template
