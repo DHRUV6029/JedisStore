@@ -24,13 +24,16 @@ public class Constants {
     public static final String GET = "GET";
     public static final String EXISTS = "EXISTS";
     public static final String INCR = "INCR";
+    public static final String INCRBY = "INCRBY";
     public static final String DECR = "DECR";
+    public static final String DECRBY = "DECRBY";
     public static final String LPUSH = "LPUSH";
     public static final String RPUSH = "RPUSH";
     public static final String LRANGE = "LRANGE";
     public static final String FLUSHALL = "FLUSHALL";
     public static final String EXIT = "EXIT";
     public static final String SAVE = "SAVE";
+
 
 
     //Exception Messages

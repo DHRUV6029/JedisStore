@@ -46,7 +46,13 @@ public class CommandProcessor {
                     case INCR -> serializer.serialize((int) new Increment().builder(deserializedArray).
                             process(memoryRef));
 
+                    case INCRBY -> serializer.serialize((int) new IncrementBy().builder(deserializedArray).
+                            process(memoryRef));
+
                     case DECR -> serializer.serialize((int) new Decrement().builder(deserializedArray).
+                            process(memoryRef));
+
+                    case DECRBY -> serializer.serialize((int) new DecrementBy().builder(deserializedArray).
                             process(memoryRef));
 
                     case SET -> {
