@@ -33,6 +33,7 @@ public class Constants {
     public static final String FLUSHALL = "FLUSHALL";
     public static final String EXIT = "EXIT";
     public static final String SAVE = "SAVE";
+    public static final String APPEND = "APPEND";
 
 
 

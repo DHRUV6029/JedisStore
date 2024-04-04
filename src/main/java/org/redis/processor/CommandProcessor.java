@@ -55,6 +55,9 @@ public class CommandProcessor {
                     case DECRBY -> serializer.serialize((int) new DecrementBy().builder(deserializedArray).
                             process(memoryRef));
 
+                    case APPEND -> serializer.serialize((int) new Append().builder(deserializedArray).
+                            process(memoryRef));
+
                     case SET -> {
                         Object resp = new Set().builder(deserializedArray).process(memoryRef);
                         if (resp == null) yield serializer.serialize(null, true);
