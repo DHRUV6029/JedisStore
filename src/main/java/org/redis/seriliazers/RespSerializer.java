@@ -39,6 +39,8 @@ public  class RespSerializer {
                     des = STR."\{des}\{serialize((String) obj, true)}";
                 } else if (obj instanceof Integer) {
                     des = STR."\{des}\{serialize((Integer) obj)}";
+                }else if (obj == null){
+                    des = STR."\{des}\{serialize(null , true)}";
                 }
             }
         }

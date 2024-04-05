@@ -34,6 +34,7 @@ public class Constants {
     public static final String EXIT = "EXIT";
     public static final String SAVE = "SAVE";
     public static final String APPEND = "APPEND";
+    public static final String MGET = "MGET";
 
 
 

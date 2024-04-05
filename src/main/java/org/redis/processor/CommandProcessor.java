@@ -71,6 +71,16 @@ public class CommandProcessor {
                         else yield serializer.serialize(String.valueOf(resp), true);
                     }
 
+                    case MGET -> {
+                        Object obj = new MGet().builder(deserializedArray).process(memoryRef);
+                        var values = (ArrayList<Object>) obj;
+                        Object[] arr = new Object[values.size()];
+                        for(int i = 0; i < arr.length; i ++) {
+                            arr[i] = values.get(i);
+                        }
+                        yield serializer.serialize(arr);
+                    }
+
                     case LPUSH -> serializer.serialize((int) new LPush().builder(deserializedArray).
                             process(memoryRef));
 
@@ -99,7 +109,6 @@ public class CommandProcessor {
                 return serializer.serialize(e);
             }
         }
-
 
     }
 }

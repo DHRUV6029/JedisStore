@@ -1,7 +1,9 @@
 package org.redis.utilities;
 import org.redis.processor.error.RedisServerError;
+import org.redis.storage.model.ExpiryData;
 
 
+import java.util.Date;
 import java.util.function.Predicate;
 
 
@@ -23,6 +25,12 @@ public class Helper {
     };
 
     public static final Predicate<String> isNxXx = (opt) -> "NX".equalsIgnoreCase(opt) || "XX".equalsIgnoreCase(opt);
+
+    public static boolean hasExpired(ExpiryData expiryMetaData) {
+        return new Date().getTime() - expiryMetaData.getSetAt() > expiryMetaData.getExpireAt();
+    }
+
+
 
 
 }

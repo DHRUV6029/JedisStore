@@ -10,6 +10,7 @@ public abstract class Command {
     public abstract void validation() throws ValidationError;
     public abstract Object executeCommand(Memory memoryRef);
 
+
     public final Object process(Memory memory) throws ValidationError{
         this.validation();
         return  this.executeCommand(memory);
