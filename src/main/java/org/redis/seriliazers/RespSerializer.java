@@ -2,7 +2,6 @@ package org.redis.seriliazers;
 
 import org.redis.utilities.Constants;
 
-import javax.crypto.Cipher;
 
 public  class RespSerializer {
     public String serialize(String str, boolean isBulk) {

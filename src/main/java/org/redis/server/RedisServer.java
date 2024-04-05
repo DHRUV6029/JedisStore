@@ -1,10 +1,8 @@
 package org.redis.server;
 
 import ch.qos.logback.classic.Logger;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.redis.storage.KeyValueStore;
 import org.redis.storage.Memory;
 import org.redis.storage.model.ExpiryData;
