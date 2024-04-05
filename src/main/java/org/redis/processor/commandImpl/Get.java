@@ -7,6 +7,7 @@ import org.redis.storage.model.ExpiryData;
 import org.redis.utilities.Helper;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 
 public class Get extends Command {
     @Override
@@ -20,6 +21,7 @@ public class Get extends Command {
         String key = super.getCommandArgs()[0];
         Object val = memoryRef.get(key);
         ExpiryData expiryMetaData = memoryRef.getKeyExpiryData().get(key);
+
         boolean itHasExpired = (expiryMetaData != null) && hasExpired(expiryMetaData);
 
         if (val == null) return null;

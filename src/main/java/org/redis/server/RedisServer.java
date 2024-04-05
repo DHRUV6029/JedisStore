@@ -1,8 +1,10 @@
 package org.redis.server;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.redis.storage.KeyValueStore;
 import org.redis.storage.Memory;
 import org.redis.storage.model.ExpiryData;
@@ -12,8 +14,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -86,7 +88,7 @@ public class RedisServer {
 
     private void restoreDb() {
         StringBuilder builder = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader("rediseDb.rdb"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("redis.rdb"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 builder.append(line);
@@ -94,8 +96,8 @@ public class RedisServer {
 
             String[] data = builder.toString().split("__SEPARATOR__");
             ObjectMapper mapper = new ObjectMapper();
-            this.memory.initKeyValueyStore(mapper.readValue(data[0], new TypeReference<>() {}));
-            this.memory.initKeyExpiryStore(mapper.readValue(data[1] ,new TypeReference<>() {}));
+            this.memory.initKeyValueyStore(mapper.readValue(data[0], new TypeReference<ConcurrentHashMap>() {}));
+            this.memory.initKeyExpiryStore(mapper.readValue(data[1] ,new TypeReference<ConcurrentHashMap<String , ExpiryData>>() {}));
 
             if (!this.memory.isKeyValueStoreEmpty()| !this.memory.isKeyValueExpiryStoreEmpty()) {
                 logger.info("Data restored");
