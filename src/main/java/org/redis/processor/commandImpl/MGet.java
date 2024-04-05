@@ -26,14 +26,18 @@ public class MGet extends Command {
 
         for (String key : keys) {
             if (memoryRef.exists(key)) {
+                var keyValue = memoryRef.get(key);
                 ExpiryData expiryMetaData = memoryRef.getKeyExpiryData().get(key);
                 boolean itHasExpired = (expiryMetaData != null) && Helper.hasExpired(expiryMetaData);
                 if (itHasExpired) {
                     memoryRef.remove(key);
                     memoryRef.getKeyExpiryData().remove(key);
                     values.add(null);
-                } else {
+                } else if((keyValue instanceof String)) {
+
                     values.add(memoryRef.get(key));
+                }else{
+                    values.add(null);
                 }
             } else {
                 values.add(null);
@@ -41,5 +45,6 @@ public class MGet extends Command {
         }
         return values;
     }
+
 
 }
