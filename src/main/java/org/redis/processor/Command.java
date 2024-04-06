@@ -29,7 +29,7 @@ public abstract class Command {
             this.command = String.valueOf(deserializedArray[0]);
             this.commandArgs = new String[deserializedArray.length-1];
             for(int i = 1 ; i < deserializedArray.length ; i++){
-                this.commandArgs[i-1] = String.valueOf(deserializedArray[i]);
+                this.commandArgs[i-1] =  String.valueOf(deserializedArray[i]);
             }
         }
         return  this;

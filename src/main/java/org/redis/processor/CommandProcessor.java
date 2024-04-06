@@ -72,11 +72,11 @@ public class CommandProcessor {
                     }
 
                     case MGET -> {
-                        Object obj = new MGet().builder(deserializedArray).process(memoryRef);
-                        var values = (ArrayList<Object>) obj;
-                        Object[] arr = new Object[values.size()];
+
+                        ArrayList<Object> obj = (ArrayList<Object>)new MGet().builder(deserializedArray).process(memoryRef);
+                        Object[] arr = new Object[obj.size()];
                         for(int i = 0; i < arr.length; i ++) {
-                            arr[i] = values.get(i);
+                            arr[i] = obj.get(i);
                         }
                         yield serializer.serialize(arr);
                     }
