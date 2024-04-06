@@ -14,4 +14,4 @@ WORKDIR /app
 # Copy the built JAR file from the previous stage to the container
 COPY --from=build /app/target/RedisServer-1.0-SNAPSHOT.jar .
 # Set the command to run the application
-CMD ["java","--enable-preview", "-jar", "RedisServer-1.0-SNAPSHOT.jar"]
+CMD ["java","--enable-preview", "-jar", "JedisServer-1.0-SNAPSHOT.jar"]
