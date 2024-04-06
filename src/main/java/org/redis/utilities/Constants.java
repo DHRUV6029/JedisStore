@@ -35,6 +35,7 @@ public class Constants {
     public static final String SAVE = "SAVE";
     public static final String APPEND = "APPEND";
     public static final String MGET = "MGET";
+    public static final String MSET = "MSET";
 
 
 
@@ -42,4 +43,6 @@ public class Constants {
     public static final String INVALID_COMMAND_ERROR = "Command should be an array of bulk str";
     public static final String UNKNOWN_COMMAND_ERROR = "Command should be an array of bulk str";
     public static final String CLOSE_CONNECTION = "Disconnecting Client";
+
+
 }

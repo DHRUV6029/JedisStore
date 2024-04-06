@@ -64,6 +64,12 @@ public class CommandProcessor {
                         else yield serializer.serialize(String.valueOf(resp), false);
                     }
 
+                    case MSET -> {
+                        Object resp = new MSet().builder(deserializedArray).process(memoryRef);
+                        yield serializer.serialize(String.valueOf(resp) , false);
+
+                    }
+
                     case GET -> {
                         Object resp = new Get().builder(deserializedArray).process(memoryRef);
                         if (resp == null) yield serializer.serialize(null, true);
