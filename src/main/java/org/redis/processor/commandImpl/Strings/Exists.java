@@ -1,4 +1,4 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
@@ -15,7 +15,7 @@ public class Exists extends Command {
     public  Object executeCommand(Memory memoryRef) {
         int i = 0;
         for (String key: super.getCommandArgs()) {
-            if (memoryRef.exists(key)) ++i;
+            if (memoryRef.keyValueStorage().containsKey(key)) ++i;
         }
         return i;
     }

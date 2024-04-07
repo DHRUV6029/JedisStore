@@ -1,4 +1,4 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
@@ -17,15 +17,15 @@ public class Get extends Command {
     @Override
     public Object executeCommand(Memory memoryRef) {
         String key = super.getCommandArgs()[0];
-        Object val = memoryRef.get(key);
-        ExpiryData expiryMetaData = memoryRef.getKeyExpiryData().get(key);
+        Object val = memoryRef.keyValueStorage().get(key);
+        ExpiryData expiryMetaData = memoryRef.keyValueStoreTTLData().get(key);
 
         boolean itHasExpired = (expiryMetaData != null) && Helper.hasExpired(expiryMetaData);
 
         if (val == null) return null;
         else if (itHasExpired) {
-            memoryRef.remove(key);
-            memoryRef.getKeyExpiryData().remove(key);
+            memoryRef.keyValueStorage().remove(key);
+            memoryRef.keyValueStoreTTLData().remove(key);
             return null;
         }
         else if (val instanceof String) return val.toString();

@@ -33,7 +33,7 @@ public class CloudWatchAppender extends UnsynchronizedAppenderBase<ILoggingEvent
                 .timestamp(event.getTimeStamp())
                 .build();
 
-        // Add event to the queue
+        // HSet event to the queue
         eventQueue.add(logEvent);
 
         // Flush queue if it has more than 10 events - Prod {Mode for prod where constant log will be three}

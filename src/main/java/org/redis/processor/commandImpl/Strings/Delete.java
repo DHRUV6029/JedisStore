@@ -1,4 +1,4 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
@@ -15,7 +15,7 @@ public class Delete extends Command {
     public Object executeCommand(Memory memoryRef) {
         int i = 0;
         for (String key: super.getCommandArgs()) {
-            Object obj = memoryRef.remove(key);
+            Object obj = memoryRef.keyValueStorage().remove(key);
             if (obj != null) ++i;
         }
         return i; //returns the number of keys delete

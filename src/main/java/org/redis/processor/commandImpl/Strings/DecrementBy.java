@@ -1,4 +1,4 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
@@ -24,18 +24,18 @@ public class DecrementBy extends Command {
         } catch (NumberFormatException e) {
             throw new WrongLiteralTypeError("Not a valid number type");
         }
-        if (memoryRef.exists(key)) {
+        if (memoryRef.keyValueStorage().containsKey(key)) {
             try {
-                decVal = Integer.parseInt(memoryRef.get(key).toString());
-                memoryRef.set(key, (decVal - decBy));
+                decVal = Integer.parseInt(memoryRef.keyValueStorage().get(key).toString());
+                memoryRef.keyValueStorage().put(key, (decVal - decBy));
                 return decVal - decBy;
             } catch (NumberFormatException e) {
                 throw new WrongLiteralTypeError("Not a valid number type");
             }
         } else {
             // According to this command's documentation, the key is set to 0 first, then decreased by 1
-            memoryRef.set(key, decVal);
-            memoryRef.set(key, decBy);
+            memoryRef.keyValueStorage().put(key, decVal);
+            memoryRef.keyValueStorage().put(key, decBy);
             return decBy;
         }
 

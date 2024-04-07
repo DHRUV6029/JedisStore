@@ -3,8 +3,9 @@ package org.redis.server;
 import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.redis.storage.*;
+import org.redis.storage.HashValue.HashValueStore;
 import org.redis.storage.KeyValueStore;
-import org.redis.storage.Memory;
 import org.redis.storage.model.ExpiryData;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,8 @@ public class RedisServer {
     public RedisServer(String ip, int port, String filePath) {
         this.ip = ip;
         this.port = port;
-        this.memory = new Memory(new KeyValueStore()); //Allocating new memory for each connection
+        this.memory = new Memory(new KeyValueStore(),
+                new HashValueStore()); //Allocating new memory for each connection
         this.restoreDb();
         ThreadFactory threadFactory =Thread.ofVirtual().name("client-handler" , 1).factory();
         this.executorService = Executors.newThreadPerTaskExecutor(threadFactory);
@@ -94,10 +96,12 @@ public class RedisServer {
 
             String[] data = builder.toString().split("__SEPARATOR__");
             ObjectMapper mapper = new ObjectMapper();
-            this.memory.initKeyValueyStore(mapper.readValue(data[0], new TypeReference<ConcurrentHashMap>() {}));
-            this.memory.initKeyExpiryStore(mapper.readValue(data[1] ,new TypeReference<ConcurrentHashMap<String , ExpiryData>>() {}));
 
-            if (!this.memory.isKeyValueStoreEmpty()| !this.memory.isKeyValueExpiryStoreEmpty()) {
+
+            this.memory.restoreKeyValueStoreFromDisk(mapper.readValue(data[0], new TypeReference<ConcurrentHashMap>() {}));
+            this.memory.restoreKeyValueStoreTTLFromDisk(mapper.readValue(data[1] ,new TypeReference<ConcurrentHashMap<String , ExpiryData>>() {}));
+
+            if (!this.memory.keyValueStorage().isEmpty()| !this.memory.keyValueStoreTTLData().isEmpty()) {
                 logger.info("Data restored");
             } else {
                 logger.info("rdb file found, but nothing to restore");

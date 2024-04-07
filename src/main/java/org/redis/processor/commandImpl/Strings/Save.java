@@ -1,4 +1,4 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redis.processor.Command;
@@ -23,8 +23,8 @@ public class Save extends Command {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            memData = objectMapper.writeValueAsString(memoryRef.getKeyValueStore());
-            expMetaData = objectMapper.writeValueAsString(memoryRef.getKeyExpiryData());
+            memData = objectMapper.writeValueAsString(memoryRef.keyValueStorage());
+            expMetaData = objectMapper.writeValueAsString(memoryRef.keyValueStoreTTLData());
             BufferedWriter writer = new BufferedWriter(new FileWriter("rediseDb.rdb"));
             writer.write(STR."\{memData}__SEPARATOR__\{expMetaData}");
             writer.close();

@@ -1,4 +1,4 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
@@ -16,17 +16,18 @@ public class Append extends Command {
     public Object executeCommand(Memory memoryRef) {
         String key = super.getCommandArgs()[0];
         String value = super.getCommandArgs()[1];
-        if (memoryRef.exists(key)) {
+        if (memoryRef.keyValueStorage().containsKey(key)) {
             try {
-                StringBuffer strValue = (StringBuffer) memoryRef.get(key);
-                memoryRef.set(key , strValue.append(value));
+                StringBuffer strValue = (StringBuffer) memoryRef.keyValueStorage().get(key);
+                memoryRef.keyValueStorage().put(key , strValue.append(value));
                 return strValue.length();
             } catch (NumberFormatException e) {
                 throw new WrongLiteralTypeError("Not a valid string type");
             }
         } else {
-            memoryRef.set(key , new StringBuffer()); //According to redis documnentation need to set as empty string first
-            memoryRef.set(key , ((StringBuffer) memoryRef.get(key)).append(value));
+            memoryRef.keyValueStorage().put(key , new StringBuffer()); //According to redis documnentation need to set as empty string first
+            memoryRef.keyValueStorage().put(key , ((StringBuffer) memoryRef.keyValueStorage().
+                    get(key)).append(value));
             return value.length();
 
         }

@@ -1,4 +1,4 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
@@ -14,13 +14,14 @@ public class FlushAll extends Command {
     @Override
     public Object executeCommand(Memory memoryRef) {
         try{
-            memoryRef.removeAll();
-            memoryRef.getKeyExpiryData().clear();
+            memoryRef.keyValueStorage().clear();
+            memoryRef.keyValueStoreTTLData().clear();
         } catch(Exception e) {
             System.out.println(e.getMessage());
             System.out.println(e.getClass());
         }
 
-        return "OK (Note, this doesn't clear any rdb files. After 'flushall', run 'save' to save current memory state";
+        return "OK (Note, this doesn't clear any rdb files. After 'flushall', run " +
+                "'save' to save current memory state";
     }
 }

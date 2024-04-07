@@ -1,12 +1,12 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
-import org.redis.processor.error.RedisServerError;
 import org.redis.processor.error.ValidationError;
 import org.redis.storage.Memory;
+import org.redis.storage.model.ExpiryData;
 import org.redis.utilities.Helper;
 
-import java.util.function.Predicate;
+import java.util.Date;
 
 public class Set extends Command {
     public static final long REALLY_BIG_TIME_VAL = 100_000_000_000L;
@@ -69,24 +69,27 @@ public class Set extends Command {
 
         switch (this.optNxXx) {
             case "XX", "xx" -> {
-                if (memoryRef.exists(key)) {
-                    memoryRef.set(key, val);
-                    memoryRef.setExpiryData(key , timeout);
+                if (memoryRef.keyValueStorage().containsKey(key)) {
+                    memoryRef.keyValueStorage().put(key, val);
+                    memoryRef.keyValueStoreTTLData().put(key ,
+                            new ExpiryData(new Date().getTime() , timeout));
                 } else {
                     return null;
                 }
             }
             case "NX", "nx" -> {
-                if (!memoryRef.exists(key)){
-                    memoryRef.set(key, val);
-                    memoryRef.setExpiryData(key , timeout);
+                if (!memoryRef.keyValueStorage().containsKey(key)){
+                    memoryRef.keyValueStorage().put(key, val);
+                    memoryRef.keyValueStoreTTLData().put(key ,
+                            new ExpiryData(new Date().getTime() , timeout));
                 } else {
                     return null;
                 }
             }
             default -> {
-                memoryRef.set(key, val);
-                memoryRef.setExpiryData(key , timeout);
+                memoryRef.keyValueStorage().put(key, val);
+                memoryRef.keyValueStoreTTLData().put(key ,
+                        new ExpiryData(new Date().getTime() , timeout));
             }
         }
         return "OK";

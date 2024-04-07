@@ -1,10 +1,9 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
 import org.redis.storage.Memory;
 import org.redis.utilities.Constants;
-import org.redis.utilities.Helper;
 
 import java.util.ArrayList;
 
@@ -16,7 +15,6 @@ public class MGet extends Command {
         if (!"MGET".equalsIgnoreCase(super.getCommand())) throw new ValidationError("Not correct use of 'mget' command!");
         if (super.getCommandArgs().length < 1) throw new ValidationError("Incorrect no of arguments");
     }
-
 
     @Override
     public Object executeCommand(Memory memoryRef) {

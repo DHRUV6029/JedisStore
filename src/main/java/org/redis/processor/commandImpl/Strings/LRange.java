@@ -1,4 +1,4 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
@@ -28,8 +28,8 @@ public class LRange extends Command {
     public Object executeCommand(Memory memoryRef) {
         String key = super.getCommandArgs()[0];
 
-        if (memoryRef.exists(key)) {
-            Object obj = memoryRef.get(key);
+        if (memoryRef.keyValueStorage().containsKey(key)) {
+            Object obj = memoryRef.keyValueStorage().get(key);
             if (obj instanceof ArrayList) {
                 List<String> list = ((ArrayList<?>) obj).stream().map(String::valueOf).toList();
                 ArrayList<String> aList = new ArrayList<>(list);
@@ -42,5 +42,4 @@ public class LRange extends Command {
             return new ArrayList<>();
         }
     }
-
 }

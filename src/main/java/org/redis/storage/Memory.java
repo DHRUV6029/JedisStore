@@ -1,68 +1,37 @@
 package org.redis.storage;
-
+import org.redis.storage.HashValue.HashValueStore;
 import org.redis.storage.model.ExpiryData;
 
-import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Memory {
-    private KeyValueStore keyValueStore;
+    private org.redis.storage.KeyValueStore keyValueStore;
+    private HashValueStore hashValueStore;
     public Memory(){}
-    public Memory(KeyValueStore keyValueStore){
+    public Memory(org.redis.storage.KeyValueStore keyValueStore,
+                  HashValueStore hashValueStore){
         this.keyValueStore = keyValueStore;
-    }
-    public boolean exists(String key) {
-        return keyValueStore.getKeyValueStore().containsKey(key);
+        this.hashValueStore = hashValueStore;
     }
 
-    public Object get(String key) {
-        return keyValueStore.getKeyValueStore().get(key);
+
+   public void restoreKeyValueStoreFromDisk(Map<String, Object> keyValues){
+        keyValueStore.setKeyValueStore(keyValues);
+   }
+    public void restoreKeyValueStoreTTLFromDisk(Map<String, ExpiryData> keyValues){
+        keyValueStore.setKeyExpiry(keyValues);
     }
-
-    public boolean remove(String key) {
-        if (exists(key)) {
-            keyValueStore.getKeyValueStore().remove(key);
-            return true;
-        }
-        return false;
-    }
-
-    public void removeAll(){
-        keyValueStore.getKeyValueStore().clear();
-
-    }
-
-    public Map<String , Object> getKeyValueStore() {
+    public Map<String, Object> keyValueStorage(){
         return keyValueStore.getKeyValueStore();
     }
 
-    public boolean isKeyValueStoreEmpty(){
-        return keyValueStore.getKeyValueStore().isEmpty();
-    }
-
-    public void set(String key, Object value) {
-        keyValueStore.getKeyValueStore().put(key , value);
-    }
-
-    public Map<String, ExpiryData> getKeyExpiryData(){
+    public Map<String, ExpiryData> keyValueStoreTTLData(){
         return keyValueStore.getKeyExpiry();
     }
 
-    public void setExpiryData(String key , long timeout){
-        keyValueStore.getKeyExpiry().put(key , new ExpiryData(new Date().getTime() , timeout));
-
+    public Map<String , ConcurrentHashMap<String , Object>> hashValueStorage(){
+        return hashValueStore.getHashValueStore();
     }
-
-    public void initKeyExpiryStore(Map<String, ExpiryData> expiryDetails){
-        keyValueStore.setKeyExpiry(expiryDetails);
-    }
-    public void initKeyValueyStore(Map<String, Object> keyValues){
-        keyValueStore.setKeyValueStore(keyValues);
-
-    }
-    public boolean isKeyValueExpiryStoreEmpty(){
-        return keyValueStore.getKeyExpiry().isEmpty();
-    }
-
 
 }

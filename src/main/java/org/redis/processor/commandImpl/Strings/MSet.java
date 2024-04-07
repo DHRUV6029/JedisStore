@@ -1,13 +1,9 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
 import org.redis.storage.Memory;
 import org.redis.utilities.Constants;
-import org.redis.utilities.Helper;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MSet extends Command {
     @Override

@@ -1,6 +1,7 @@
 package org.redis.processor;
 
-import org.redis.processor.commandImpl.*;
+import org.redis.processor.commandImpl.Hash.HSet;
+import org.redis.processor.commandImpl.Strings.*;
 import org.redis.processor.error.CommandNotFound;
 import org.redis.seriliazers.RespDeserializer;
 import org.redis.seriliazers.RespSerializer;
@@ -107,6 +108,10 @@ public class CommandProcessor {
                     }
 
                     case SAVE -> serializer.serialize(String.valueOf(new Save().builder(deserializedArray).process(memoryRef)), false);
+                    case DELETE -> serializer.serialize(String.valueOf(new Delete().builder(deserializedArray).process(memoryRef)), false);
+
+                    //Hash value command
+                    case HSET -> serializer.serialize(String.valueOf(new HSet().builder(deserializedArray).process(memoryRef)), false);
 
                     default ->
                             throw new CommandNotFound(UNKNOWN_COMMAND_ERROR);

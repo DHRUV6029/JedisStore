@@ -1,4 +1,4 @@
-package org.redis.processor.commandImpl;
+package org.redis.processor.commandImpl.Strings;
 
 import org.redis.processor.Command;
 import org.redis.processor.error.ValidationError;
@@ -21,18 +21,18 @@ public class IncrementBy extends Command {
             incBy = Integer.parseInt(super.getCommandArgs()[1]);
         }catch (NumberFormatException e){throw  new WrongLiteralTypeError("Not a valid number type");}
 
-        if(memoryRef.exists(key)){
+        if(memoryRef.keyValueStorage().containsKey(key)){
             try {
-                incVal = Integer.parseInt(memoryRef.get(key).toString());
-                memoryRef.set(key, (incVal + incBy));
+                incVal = Integer.parseInt(memoryRef.keyValueStorage().get(key).toString());
+                memoryRef.keyValueStorage().put(key, (incVal + incBy));
                 return (incVal + incBy);
             }catch (NumberFormatException e){
                 throw new WrongLiteralTypeError("Not a valid number type");
             }
         }else{
             // According to this command's documentation, the key is set to 0 first, then increased by 1
-            memoryRef.set(key, incVal);
-            memoryRef.set(key, incBy);
+            memoryRef.keyValueStorage().put(key, incVal);
+            memoryRef.keyValueStorage().put(key, incBy);
             return incBy;
         }
 
