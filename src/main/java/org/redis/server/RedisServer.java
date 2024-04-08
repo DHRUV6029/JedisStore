@@ -4,8 +4,8 @@ import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redis.storage.*;
-import org.redis.storage.HashValue.HashValueStore;
-import org.redis.storage.KeyValueStore;
+import org.redis.storage.StoreImpl.HashValueStore;
+import org.redis.storage.StoreImpl.KeyValueStore;
 import org.redis.storage.model.ExpiryData;
 import org.slf4j.LoggerFactory;
 
