@@ -2,7 +2,7 @@ package org.jedis.storage;
 
 import org.jedis.storage.StoreImpl.HashValueStore;
 import org.jedis.storage.StoreImpl.KeyValueStore;
-import org.jedis.storage.model.ExpiryData;
+import org.jedis.storage.Model.ExpiryData;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,4 +1,4 @@
-package org.jedis.storage.model;
+package org.jedis.storage.Model;
 
 public class ExpiryData {
     long setAt;

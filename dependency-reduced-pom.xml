@@ -46,7 +46,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>org.redis.Main</mainClass>
+                  <mainClass>org.jedis.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>

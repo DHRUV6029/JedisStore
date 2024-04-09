@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jedis.storage.*;
 import org.jedis.storage.StoreImpl.HashValueStore;
 import org.jedis.storage.StoreImpl.KeyValueStore;
-import org.jedis.storage.model.ExpiryData;
+import org.jedis.storage.Model.ExpiryData;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;

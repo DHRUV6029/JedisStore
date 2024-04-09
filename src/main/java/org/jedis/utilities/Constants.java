@@ -40,6 +40,8 @@ public class Constants {
 
     // commands  Hash
     public static final String HSET = "HSET";
+    public static final String HGET = "HGET";
+    public static final String HMGET = "HMGET";
 
 
 

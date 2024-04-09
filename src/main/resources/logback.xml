@@ -1,11 +1,11 @@
 <configuration>
-    <appender name="CLOUDWATCH_INFO" class="org.redis.logging.CloudWatchAppender">
+    <appender name="CLOUDWATCH_INFO" class="org.jedis.logging.CloudWatchAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
     </appender>
 
-    <appender name="CLOUDWATCH_ERROR" class="org.redis.logging.CloudWatchAppender">
+    <appender name="CLOUDWATCH_ERROR" class="org.jedis.logging.CloudWatchAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
         </filter>

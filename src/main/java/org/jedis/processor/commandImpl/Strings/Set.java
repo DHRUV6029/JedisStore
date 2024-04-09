@@ -3,7 +3,7 @@ package org.jedis.processor.commandImpl.Strings;
 import org.jedis.processor.Command;
 import org.jedis.processor.error.ValidationError;
 import org.jedis.storage.Memory;
-import org.jedis.storage.model.ExpiryData;
+import org.jedis.storage.Model.ExpiryData;
 import org.jedis.utilities.Helper;
 
 import java.util.Date;

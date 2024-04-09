@@ -1,6 +1,6 @@
 package org.jedis.utilities;
 import org.jedis.processor.error.RedisServerError;
-import org.jedis.storage.model.ExpiryData;
+import org.jedis.storage.Model.ExpiryData;
 
 
 import java.util.Date;

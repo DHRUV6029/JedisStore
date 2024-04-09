@@ -25,19 +25,19 @@ public class HSet extends Command {
 
     @Override
     public Object executeCommand(Memory memoryRef) {
-        String hash = super.getCommandArgs()[0];
+        String hashKeyValue = super.getCommandArgs()[0];
         String[] fieldValues = super.getCommandArgs();
         int cnt = 0;
         //check if Hash is present or not
-        if (!memoryRef.hashValueStorage().containsKey(hash)) {
-            memoryRef.hashValueStorage().put(hash, new ConcurrentHashMap<>());
+        if (!memoryRef.hashValueStorage().containsKey(hashKeyValue)) {
+            memoryRef.hashValueStorage().put(hashKeyValue, new ConcurrentHashMap<>());
         }
 
         for (int i = 1; i < fieldValues.length; i += 2) {
             String field = fieldValues[i];
             String value = fieldValues[i + 1];
 
-            memoryRef.hashValueStorage().get(hash).put(field, value);
+            memoryRef.hashValueStorage().get(hashKeyValue).put(field, value);
             cnt += 1;
         }
         return cnt;
