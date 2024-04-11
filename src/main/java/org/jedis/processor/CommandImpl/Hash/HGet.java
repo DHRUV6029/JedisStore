@@ -1,4 +1,4 @@
-package org.jedis.processor.commandImpl.Hash;
+package org.jedis.processor.CommandImpl.Hash;
 
 import org.jedis.processor.Command;
 import org.jedis.processor.error.ValidationError;
@@ -15,7 +15,7 @@ public class HGet extends Command {
     public Object executeCommand(Memory memoryRef) {
         String hashKeyValue = super.getCommandArgs()[0];
         String field = super.getCommandArgs()[1];
-        Object value = null;
+        Object value;
 
         if(memoryRef.hashValueStorage().containsKey(hashKeyValue)){
             var keyMap = memoryRef.hashValueStorage().get(hashKeyValue);
@@ -23,7 +23,6 @@ public class HGet extends Command {
         }else{
             return null;
         }
-
         if(value instanceof String){
             return value.toString();
         }
@@ -33,5 +32,4 @@ public class HGet extends Command {
             return  null;
         }
     }
-
 }

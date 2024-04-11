@@ -42,6 +42,7 @@ public class Constants {
     public static final String HSET = "HSET";
     public static final String HGET = "HGET";
     public static final String HMGET = "HMGET";
+    public static final String HEXISTS = "HEXISTS";
 
 
 

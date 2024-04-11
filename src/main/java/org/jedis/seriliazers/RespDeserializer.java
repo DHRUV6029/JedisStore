@@ -58,5 +58,4 @@ public class RespDeserializer {
         System.out.println(msg);
         return msg.substring(1, msg.indexOf(Constants.CRLF));
     }
-
 }

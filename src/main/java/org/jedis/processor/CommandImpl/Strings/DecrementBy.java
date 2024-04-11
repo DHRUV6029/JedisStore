@@ -1,4 +1,4 @@
-package org.jedis.processor.commandImpl.Strings;
+package org.jedis.processor.CommandImpl.Strings;
 
 import org.jedis.processor.Command;
 import org.jedis.processor.error.ValidationError;
@@ -33,7 +33,7 @@ public class DecrementBy extends Command {
                 throw new WrongLiteralTypeError("Not a valid number type");
             }
         } else {
-            // According to this command's documentation, the key is set to 0 first, then decreased by 1
+            //According to this command's documentation, the key is set to 0 first, then decreased by 1
             memoryRef.keyValueStorage().put(key, decVal);
             memoryRef.keyValueStorage().put(key, decBy);
             return decBy;

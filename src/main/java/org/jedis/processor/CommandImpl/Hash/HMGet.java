@@ -1,7 +1,6 @@
-package org.jedis.processor.commandImpl.Hash;
+package org.jedis.processor.CommandImpl.Hash;
 
 import org.jedis.processor.Command;
-import org.jedis.processor.commandImpl.Strings.Get;
 import org.jedis.processor.error.ValidationError;
 import org.jedis.storage.Memory;
 import org.jedis.utilities.Constants;

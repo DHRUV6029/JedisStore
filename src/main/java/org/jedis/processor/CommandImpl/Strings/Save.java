@@ -1,4 +1,4 @@
-package org.jedis.processor.commandImpl.Strings;
+package org.jedis.processor.CommandImpl.Strings;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jedis.processor.Command;

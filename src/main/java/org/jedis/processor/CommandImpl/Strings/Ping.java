@@ -1,4 +1,4 @@
-package org.jedis.processor.commandImpl.Strings;
+package org.jedis.processor.CommandImpl.Strings;
 
 import org.jedis.processor.Command;
 import org.jedis.processor.error.ValidationError;

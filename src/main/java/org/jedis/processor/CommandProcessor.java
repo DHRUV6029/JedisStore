@@ -1,7 +1,7 @@
 package org.jedis.processor;
 
-import org.jedis.processor.commandImpl.Hash.*;
-import org.jedis.processor.commandImpl.Strings.*;
+import org.jedis.processor.CommandImpl.Hash.*;
+import org.jedis.processor.CommandImpl.Strings.*;
 import org.jedis.processor.error.CommandNotFound;
 import org.jedis.seriliazers.RespDeserializer;
 import org.jedis.seriliazers.RespSerializer;
@@ -130,6 +130,10 @@ public class CommandProcessor {
                         }
                         yield serializer.serialize(arr);
                     }
+
+                    case HEXISTS -> serializer.serialize((int) new HExists().builder(deserializedArray).
+                            process(memoryRef));
+
 
 
                     default ->
