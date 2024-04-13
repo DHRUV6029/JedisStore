@@ -13,13 +13,13 @@ import java.nio.charset.StandardCharsets;
 
 
 
-public class RedisServerConnectionManager {
+public class JedisServerConnectionManager {
 
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(RedisServerConnectionManager.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(JedisServerConnectionManager.class);
     private Memory memory;
     private Socket socket;
 
-    public RedisServerConnectionManager(Socket socket , Memory memory){
+    public JedisServerConnectionManager(Socket socket , Memory memory){
         this.memory = memory;
         this.socket = socket;
     }

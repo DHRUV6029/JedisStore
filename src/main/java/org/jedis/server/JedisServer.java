@@ -21,8 +21,8 @@ import java.util.concurrent.ThreadFactory;
 
 
 
-public class RedisServer {
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(RedisServer.class);
+public class JedisServer {
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(JedisServer.class);
     private final String ip;
     private final int port;
     private final ExecutorService executorService;
@@ -31,7 +31,7 @@ public class RedisServer {
     private List<Socket> activeConnectedSockets = new ArrayList<>();
     private Memory memory;
 
-    public RedisServer(String ip, int port, String filePath) {
+    public JedisServer(String ip, int port, String filePath) {
         this.ip = ip;
         this.port = port;
         this.memory = new Memory(new KeyValueStore(),
@@ -53,7 +53,7 @@ public class RedisServer {
                 executorService.submit(()->
                 {
                     try {
-                            new RedisServerConnectionManager(clientSocket , this.memory).connect();
+                            new JedisServerConnectionManager(clientSocket , this.memory).connect();
                     }catch (IOException e){}
                 });
             }
