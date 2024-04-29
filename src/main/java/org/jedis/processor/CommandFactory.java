@@ -1,9 +1,6 @@
 package org.jedis.processor;
 
-import org.jedis.processor.CommandImpl.Hash.HExists;
-import org.jedis.processor.CommandImpl.Hash.HGet;
-import org.jedis.processor.CommandImpl.Hash.HMGet;
-import org.jedis.processor.CommandImpl.Hash.HSet;
+import org.jedis.processor.CommandImpl.Hash.*;
 import org.jedis.processor.CommandImpl.Strings.*;
 import org.jedis.processor.error.CommandNotFound;
 
@@ -46,6 +43,7 @@ public class CommandFactory {
             case HGET -> new HGet();
             case HMGET -> new HMGet();
             case HEXISTS -> new HExists();
+            case HDEL -> new HDel();
             default -> throw new CommandNotFound(UNKNOWN_COMMAND_ERROR);
         };
     }

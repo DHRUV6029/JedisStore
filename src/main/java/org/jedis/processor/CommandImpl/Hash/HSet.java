@@ -21,8 +21,6 @@ public class HSet extends Command {
         }
 
     }
-
-
     @Override
     public Object executeCommand(Memory memoryRef) {
         String hashKeyValue = super.getCommandArgs()[0];

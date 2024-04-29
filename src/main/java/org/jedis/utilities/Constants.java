@@ -3,7 +3,7 @@ package org.jedis.utilities;
 
 public class Constants {
     public static String serverIP = "127.0.0.1";
-    public static int port = 6380;
+    public static int port = 6379;
     public static String filePath = "data.bin";
 
     public static final char CR = '\r';
@@ -43,7 +43,7 @@ public class Constants {
     public static final String HGET = "HGET";
     public static final String HMGET = "HMGET";
     public static final String HEXISTS = "HEXISTS";
-
+    public static final String HDEL = "HDEL";
 
 
 

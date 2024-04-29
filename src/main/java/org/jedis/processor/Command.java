@@ -34,5 +34,5 @@ public abstract class Command {
         }
         return  this;
     }
-    
+
 }

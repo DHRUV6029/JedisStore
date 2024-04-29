@@ -39,7 +39,7 @@ public class Helper {
 
     public static Object getBulkMode(String commandName , Object response){
         return switch (commandName.toUpperCase()){
-            case EXIT, PING, MSET, FLUSHALL, SAVE, DELETE ,HSET-> false;
+            case EXIT, PING, MSET, FLUSHALL, SAVE, DELETE ,HSET , HDEL-> false;
             case ECHO -> true;
             case EXISTS , INCR ,INCRBY , DECR , DECRBY , APPEND, MGET, LPUSH, RPUSH, LRANGE, HMGET, HEXISTS -> null;
             case SET -> response == null;
@@ -67,6 +67,5 @@ public class Helper {
         }
         return arr;
     }
-
 
 }
